@@ -12,13 +12,13 @@ print('Escribeme algo')
 message = input(str())
 
 # Enviar el mensaje al servidor
-client_socket.sendto(message.encode(), (server_ip, server_port))
+client_socket.sendto(message.encode('utf-8'), (server_ip, server_port))
 
 # Recibir respuesta del servidor
 response, server_address = client_socket.recvfrom(1024)
 
 # Mostrar respuesta del servidor
-print(f"La respuesta del servidor: {response.decode()}")
+print(f"La respuesta del servidor: {response.decode('utf-8')}")
 
 # Cerrar el socket
 client_socket.close()

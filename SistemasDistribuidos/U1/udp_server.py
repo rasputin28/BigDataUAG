@@ -17,8 +17,10 @@ while True:
     data, client_address = server_socket.recvfrom(1024)
 
     # Mostrar datos recibidos
-    print(f"Datos recibidos de {client_address}: {data.decode()}")
+    print(f"Datos recibidos de {client_address}: {data.decode('utf-8')}")
 
     # Enviar una respuesta al cliente
     response = 'Adios cliente UDP'
-    server_socket.sendto(response.encode(), client_address)
+    server_socket.sendto(response.encode('utf-8'), client_address)
+
+    break
