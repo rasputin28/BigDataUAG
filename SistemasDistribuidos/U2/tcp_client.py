@@ -11,7 +11,10 @@ client_socket.connect((ip_address, port))
 
 while True:
     message = input("Escribe un mensaje (o escribe 'salir' para salir): ")
-
+    # Enviar mensaje al servidor
+    client_socket.send(message.encode('utf-8'))
+    # Recibir respuesta del servidor
+    response = client_socket.recv(1024)
     if message == 'salir':
         break
 
