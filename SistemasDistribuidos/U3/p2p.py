@@ -6,8 +6,14 @@ import threading as thread
 HOST = socket.gethostname()
 
 # IP Host
-IP = socket.gethostbyname(HOST)
-print("IP Host: ", IP)
+try:
+    IP = socket.gethostbyname(HOST)
+    print(f'IP del {HOST} es {IP}')
+except socket.gaierror as e:
+    print("No se pudo resolver el hostname")
+    print(e)
+
+input("Ingresa la IP del host: ")
 
 # Port
 PORT = 1234
