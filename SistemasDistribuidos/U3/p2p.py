@@ -33,7 +33,7 @@ def receive():
         data = s.recvfrom(1024)
         if data[0].decode('utf-8') == "salir":
             print("El cliente ha salido")
-            os.exit(1)
+            socket.close()
 
         print("Mensaje recibido: ", data[0].decode('utf-8'))
 
@@ -44,7 +44,7 @@ def send():
         s.sendto(msg.encode('utf-8'), (recep, PORT))
         if msg == "salir":
             print("Saliendo...")
-            os.exit(1)
+            socket.close()
 
 # Hilos
 envio = thread.Thread(target=send)
