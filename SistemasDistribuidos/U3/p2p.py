@@ -1,17 +1,8 @@
 import socket
-import os
 import threading as thread
 
-# Host
-HOST = socket.gethostname()
-
-# IP Host
-try:
-    IP = socket.gethostbyname(HOST)
-    print(f'IP del {HOST} es {IP}')
-except socket.gaierror as e:
-    print("No se pudo resolver el hostname")
-    print(e)
+# Listar IPs de nodos
+print('Lista de IPs de nodos: MAC=192.168.1.64, PC=172.26.103.50')
 
 IP_HOST = input("Ingresa tu IP: ")
 
