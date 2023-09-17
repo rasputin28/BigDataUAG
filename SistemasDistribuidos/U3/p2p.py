@@ -1,54 +1,50 @@
 import socket
-import time
+import os
+import threading as thread
 
-#print('Define la ip de tu amigo')
-#ip_amigo = input(str())
-ip_amigo = '127.0.0.0'
-#print('Define el puerto de comunicacion')
-#port = input(int())
-port = 12345
+# Host
+HOST = socket.gethostname()
 
-# Instanciar socket UDP
-node_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# IP Host
+IP = socket.gethostbyname(HOST)
+print("IP Host: ", IP)
 
-while True:
-    # Conexion constante
-    node_socket.bind((ip_amigo, port))
-    print(f'Este dispositivo esta tratando de conectarse a {ip_amigo}:{port}')
-    # Mensaje y respuesta de confirmacion
-    node_socket.sendto('Hola'.encode('utf-8'), (ip_amigo, port))
-    respuesta, direccion = node_socket.recvfrom(1024)
-    time.sleep(10)
-    if respuesta == True:
-        print('Tu amigo esta conectado')
-        print('Escribele a tu amigo')
-        mensaje = input(str())
-        node_socket.sendto(mensaje.encode('utf-8'), (ip_amigo, port))
-        respuesta, direccion = node_socket.recvfrom(1024)
-        if respuesta == 'salir':
-            node_socket.close()
-    else:
-        print('Tu amigo no esta conectado')
-        time.sleep(2)
-        print('Esperando unos momentos para ver si se conecta...')
-        time.sleep(10)
-        # Mandamos otro mensaje de confirmacion por ultima vez
-        node_socket.sendto('Hola'.encode('utf-8'), (ip_amigo, port))
-        respuesta, direccion = node_socket.recvfrom(1024)
-        if respuesta == True:
-            print('Tu amigo esta conectado')
-        else:
-            print('Tu amigo no esta conectado y cerraremos la conexion')
-            time.sleep(2)
-            print('Adios')
-            node_socket.close()
-   
+# Port
+PORT = 1234
 
+# IP del receptor
+recep = input('Ingresa tu IP: ')
 
+# Crear socket UDP
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    
-   
-    
+# Enlace de socket y puerto
+s.bind((recep, PORT))
 
+def receive():
+    while True:
+        # Recibir datos 
+        data = s.recvfrom(1024)
+        if data[0].decode('utf-8') == "salir":
+            print("El cliente ha salido")
+            os.exit()
 
+        print("Mensaje recibido: ", data[0].decode('utf-8'))
+
+def send():
+    while True:
+        # Enviar datos 
+        msg = input("Mensaje a enviar: ")
+        s.sendto(msg.encode('utf-8'), (recep, PORT))
+        if msg == "salir":
+            print("Saliendo...")
+            os.exit(1)
+
+# Hilos
+envio = thread.Thread(target=send)
+recepcion = thread.Thread(target=receive)
+
+# Iniciar hilos
+envio.start()
+recepcion.start()
 
