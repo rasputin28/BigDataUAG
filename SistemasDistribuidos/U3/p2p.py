@@ -13,13 +13,13 @@ except socket.gaierror as e:
     print("No se pudo resolver el hostname")
     print(e)
 
-IP_HOST = input("Ingresa la IP del host: ")
+IP_HOST = input("Ingresa tu IP: ")
 
 # Port
 PORT = 1234
 
 # IP del receptor
-recep = input('Ingresa tu IP: ')
+recep = input('Ingresa la IP del receptor: ')
 
 # Crear socket UDP
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
