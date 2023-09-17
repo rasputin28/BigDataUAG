@@ -16,7 +16,7 @@ except socket.gaierror as e:
 IP_HOST = input("Ingresa tu IP: ")
 
 # Port
-PORT = 1234
+PORT = 12345
 
 # IP del receptor
 recep = input('Ingresa la IP del receptor: ')
@@ -33,7 +33,7 @@ def receive():
         data = s.recvfrom(1024)
         if data[0].decode('utf-8') == "salir":
             print("El cliente ha salido")
-            os.exit()
+            os.exit(1)
 
         print("Mensaje recibido: ", data[0].decode('utf-8'))
 
