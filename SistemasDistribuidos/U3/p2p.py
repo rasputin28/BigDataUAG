@@ -13,7 +13,7 @@ except socket.gaierror as e:
     print("No se pudo resolver el hostname")
     print(e)
 
-input("Ingresa la IP del host: ")
+IP_HOST = input("Ingresa la IP del host: ")
 
 # Port
 PORT = 1234
@@ -25,7 +25,7 @@ recep = input('Ingresa tu IP: ')
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Enlace de socket y puerto
-s.bind((recep, PORT))
+s.bind((IP_HOST, PORT))
 
 def receive():
     while True:
