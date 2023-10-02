@@ -1,24 +1,21 @@
+import socket
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
 
-# Function to print Tic Tac Toe
 def print_tic_tac_toe(values):
-    print("\n")
-    print("\t     |     |")
-    print("\t  {}  |  {}  |  {}".format(values[0], values[1], values[2]))
-    print('\t_____|_____|_____')
+    result = ""
+    result += "\n"
+    result += "\t     |     |"
+    result += "\t  {}  |  {}  |  {}\n".format(values[0], values[1], values[2])
+    result += '\t_____|_____|_____\n'
+    result += "\t     |     |\n"
+    result += "\t  {}  |  {}  |  {}\n".format(values[3], values[4], values[5])
+    result += '\t_____|_____|_____\n'
+    result += "\t     |     |\n"
+    result += "\t  {}  |  {}  |  {}\n".format(values[6], values[7], values[8])
+    result += "\t     |     |\n\n"
+    return result
  
-    print("\t     |     |")
-    print("\t  {}  |  {}  |  {}".format(values[3], values[4], values[5]))
-    print('\t_____|_____|_____')
- 
-    print("\t     |     |")
- 
-    print("\t  {}  |  {}  |  {}".format(values[6], values[7], values[8]))
-    print("\t     |     |")
-    print("\n")
- 
-# Function to print the score-board
 def print_scoreboard(score_board):
     print("\t--------------------------------")
     print("\t        TABLERO DE PUNTOS       ")
@@ -29,8 +26,7 @@ def print_scoreboard(score_board):
     print("\t   ", players[1], "\t    ", score_board[players[1]])
  
     print("\t--------------------------------\n")
-
-# Function to check if any player has won
+ 
 def check_win(player_pos, cur_player):
  
     # All possible winning combinations
@@ -44,14 +40,12 @@ def check_win(player_pos, cur_player):
             return True
     # Return False if no combination is satisfied       
     return False       
-
-# Function to check if the game is drawn
+ 
 def check_draw(player_pos):
     if len(player_pos['X']) + len(player_pos['O']) == 9:
         return True
-    return False   
+    return False       
 
-# Function for a single game of Tic Tac Toe
 def single_game(cur_player):
  
     # Represents the Tic Tac Toe
@@ -107,19 +101,22 @@ def single_game(cur_player):
         # Switch player moves
         if cur_player == 'X':
             cur_player = 'O'
-        else:
+        else:  
             cur_player = 'X'
-            
-# Create an instance of the XML-RPC server
-server = SimpleXMLRPCServer(('localhost', 8000), allow_none=True)
 
-# Register the functions
-server.register_function(print_tic_tac_toe, 'print_tic_tac_toe')
-server.register_function(print_scoreboard, 'print_scoreboard')
-server.register_function(check_win, 'check_win')
-server.register_function(check_draw, 'check_draw')
-server.register_function(single_game, 'single_game')
+# Instanciate the XML-RPC server
+server = SimpleXMLRPCServer(('127.0.0.1', 8000))
 
-# Run the server
-print("Server is listening on port 8000...")
-server.serve_forever()
+# Register functions with the server
+server.register_function(print_tic_tac_toe)
+server.register_function(print_scoreboard)
+server.register_function(check_win)
+server.register_function(check_draw)
+server.register_function(single_game)
+
+def main():
+    print("Server is running...")
+    server.serve_forever()
+
+if __name__ == "__main__":
+    main()

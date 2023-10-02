@@ -19,3 +19,4 @@ Nota: Ten en consideración que no se puede reutilizar una casilla y no se requi
 7. Sube en este espacio tu programa ejecutable y una descripción del mismo.
 
 8. Revisa la lista de cotejo para que consideres los criterios para el desarrollo de tu entregable.
+
