@@ -6,7 +6,7 @@ import imutils
 
 # Socket Create
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-socket_address = ('127.0.0.0', 9999)
+socket_address = ('127.0.0.1', 9999)
 
 # Socket Bind
 server_socket.bind(socket_address)
