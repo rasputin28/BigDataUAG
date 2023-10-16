@@ -4,20 +4,20 @@ import pickle
 import struct
 import imutils
 
-# Socket Create
+# Create Socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket_address = ('127.0.0.1', 9999)
 
-# Socket Bind
+# Enlazar el socket
 server_socket.bind(socket_address)
 
-# Socket Listen
+# Escuchar
 server_socket.listen(5)
 print("LISTENING AT:", socket_address)
 
 while True:
     client_socket, addr = server_socket.accept()
-    print('GOT CONNECTION FROM:', addr)
+    print('Recibiendo conexión desde:', addr)
     if client_socket:
         vid = cv2.VideoCapture(0)
 
@@ -28,13 +28,13 @@ while True:
             message = struct.pack("Q", len(a)) + a
             client_socket.sendall(message)
 
-            cv2.imshow('TRANSMITTING VIDEO', frame)
+            cv2.imshow('Transmitiendo video', frame)
 
-            # Break the loop if the Enter key is pressed or if the client disconnects
+            # Rompe el loop cuando se presiona la tecla Enter
             if cv2.waitKey(1) == 13 or not client_socket:
                 break
 
-        # Release resources and close the client socket
+        # Cierra la conexión
         vid.release()
         cv2.destroyAllWindows()
         client_socket.close()
